@@ -1,6 +1,7 @@
 import psycopg2
 import requests
 
+
 def get_vacancies(employer_id):
     """Получение данных вакансий по API"""
 
@@ -29,7 +30,7 @@ def get_vacancies(employer_id):
 
 
 def get_employer(employer_id):
-    """Получение данных о работодателях  по API"""
+    """Получение данных о работодателях по API"""
 
     url = f"https://api.hh.ru/employers/{employer_id}"
     data_vacancies = requests.get(url).json()
@@ -43,10 +44,10 @@ def get_employer(employer_id):
 
 
 def create_database():
-    """Создание базы данных, если ее нет"""
+    """Создание базы данных, если её нет"""
 
     conn = psycopg2.connect(host="localhost", database="postgres",
-                            user="postgres", password="1629514", client_encoding="utf-8")
+                            user="postgres", password="12345", client_encoding="utf-8")
     conn.autocommit = True
     cur = conn.cursor()
 
@@ -61,12 +62,12 @@ def create_database():
     conn.close()
 
 def create_table():
-    """Создание таблиц, если их еще нет"""
+    """Создание таблиц, если их ещё нет"""
 
     create_database()
 
     conn = psycopg2.connect(host="localhost", database="course_work_5",
-                            user="postgres", password="1629514", client_encoding="utf-8")
+                            user="postgres", password="12345", client_encoding="utf-8")
     with conn.cursor() as cur:
         cur.execute("""
                     CREATE TABLE IF NOT EXISTS employers (
@@ -92,7 +93,7 @@ def add_to_table(employers_list):
     """Заполнение базы данных компании и вакансии"""
 
     with psycopg2.connect(host="localhost", database="course_work_5",
-                          user="postgres", password="1629514", client_encoding="utf-8") as conn:
+                          user="postgres", password="12345", client_encoding="utf-8") as conn:
         with conn.cursor() as cur:
             for employer_id in employers_list:
                 # Получение данных о компании по API
@@ -119,7 +120,7 @@ def add_to_table(employers_list):
 
 
 def add_top_companies_and_vacancies():
-    """Добавляет топ 20 компаний и 10 вакансий от каждой компании в базу данных"""
+    """Добавляет топ 10 компаний и вакансии от каждой компании в базу данных"""
 
     top_companies = [1740, 15478, 8620, 3529, 78638, 4006, 4504679, 561525, 64174, 8642172]
 
@@ -129,7 +130,7 @@ def add_top_companies_and_vacancies():
 
         # Добавление компании в таблицу с игнорированием конфликта
         with psycopg2.connect(host="localhost", database="course_work_5",
-                              user="postgres", password="1629514", client_encoding="utf-8") as conn:
+                              user="postgres", password="12345", client_encoding="utf-8") as conn:
             with conn.cursor() as cur:
                 cur.execute('INSERT INTO employers (employer_id, company_name, open_vacancies) '
                             'VALUES (%s, %s, %s) ON CONFLICT DO NOTHING RETURNING employer_id',
