@@ -122,7 +122,7 @@ def add_to_table(employers_list):
 def add_top_companies_and_vacancies():
     """Добавляет топ 10 компаний и вакансии от каждой компании в базу данных"""
 
-    top_companies = [1740, 15478, 8620, 3529, 78638, 4006, 4504679, 561525, 64174, 8642172]
+    top_companies = [1740, 15478, 9764865, 3529, 78638, 39305, 920692, 4181, 64174, 3857386, 4986323, 907345, 227780]
 
     for employer_id in top_companies:
         employer_data = get_employer(employer_id)
