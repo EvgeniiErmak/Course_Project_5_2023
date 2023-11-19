@@ -1,4 +1,5 @@
 from utils import create_table, add_to_table, add_top_companies_and_vacancies
+from tabulate import tabulate
 from db_manager import DBManager
 
 
@@ -25,7 +26,8 @@ def main():
         if task == '0':
             break
         elif task == '1':
-            print(db_manager.get_companies_and_vacancies_count())
+            data = db_manager.get_companies_and_vacancies_count()
+            print(tabulate(data, headers=['Название компании', 'Количество вакансий']))
             print()
         elif task == '2':
             print(db_manager.get_all_vacancies())
